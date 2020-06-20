@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Button ,Image} from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
-import ListEmployee from '../Employee/ListEmplyee/ListEmployee'
+import ListEmployee from '../Employee/ListEmployee/ListEmployee'
 import Profile from '../Employee/Profile/Profile'
 import CreatEmployee from '../Employee/CreatEmployee/CreatEmployee'
 import Icon from 'react-native-vector-icons/FontAwesome';
