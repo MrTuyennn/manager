@@ -3,34 +3,35 @@ import { StyleSheet, Text, View,Image } from 'react-native'
 import {Card,Button } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
-function Profile() {
+const Profile = (props) => {
+    const {name,position,phone,email,salary,image} = props.route.params.item;
     return (
         <View style={styles.container}>
         <View style={styles.viewHeader}>
           <View style={styles.bg}></View>
            <View style={styles.imageView}>
-           <Image style={styles.image} source={require('../../../assets/images/download.jpg')}></Image>
+           <Image style={styles.image} source={{uri:image}}></Image>
            </View>
            
         </View>
         <View style={styles.bodyView}>
-          <Text style={styles.text}>Nguyễn Ngọc Tuyên</Text>
+          <Text style={styles.text}>{name}</Text>
            <Card style={styles.myCard}>
            <View style={styles.view}>
                <Icon style={styles.icon} name="envelope" color='#00d2ff' size={24}></Icon>
-               <Text style={styles.viewText}>nguyenngoctuyen@gmail.com</Text>
+               <Text style={styles.viewText}>{email}</Text>
            </View>
            </Card>
            <Card style={styles.myCard}>
            <View style={styles.view}>
                <Icon style={styles.icon} name="phone" color='#00d2ff' size={24}></Icon>
-               <Text style={styles.viewText}>0969734928</Text>
+               <Text style={styles.viewText}>{phone}</Text>
            </View>
            </Card>
            <Card style={styles.myCard}>
            <View style={styles.view}>
                <Icon style={styles.icon} name="funnel-dollar" color='#00d2ff' size={24}></Icon>
-               <Text style={styles.viewText}>1$</Text>
+               <Text style={styles.viewText}>{salary}</Text>
            </View>
            </Card>
         </View>
