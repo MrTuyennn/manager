@@ -16,11 +16,13 @@ const CreatEmployee = () => {
     const _SumitData = () => {
         fetch('http://192.168.0.111:3000/send-data',{
             method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
             body:JSON.stringify({
                 name:name,
+                email:email,
                 position:position,
                 phone:phone,
                 salary:salary,
@@ -28,7 +30,7 @@ const CreatEmployee = () => {
             })
         }).then(res => res.json())
         .then(data => {
-            console.log(data)
+            console.log(data + "data☺")
         }).catch(err => {
             console.log("err" + err)
         })
@@ -48,7 +50,7 @@ const CreatEmployee = () => {
             }
         }).then(res => res.json())
         .then(data =>{
-            setpicture(data.uri)
+            setpicture(data.url)
             setmodal(false)
             console.log(data)
         }).catch(err => {
