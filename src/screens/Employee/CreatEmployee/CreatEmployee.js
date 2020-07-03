@@ -4,13 +4,34 @@ import { TextInput, Button,icon } from 'react-native-paper';
 import ImagePicker from 'react-native-image-picker';
 
 
-const CreatEmployee = () => {
-    const [name, setName] = useState("");
-    const [position,setposition] = useState("");
-    const [phone, setPhone] = useState("");
-    const [email, setemail] = useState("");
-    const [salary, setsalary] = useState("");
-    const [picture, setpicture] = useState("");
+const CreatEmployee = ({navigation,route}) =>{
+
+    const getDeltal = (type) =>{
+        if(route.params){
+            switch(type){
+                case "name":
+                    return route.params.name
+                case "phone":
+                    return route.params.phone
+                case "email":
+                    return route.params.email
+                case "salary":
+                    return route.params.salary
+                case "picture":
+                    return route.params.picture
+                case "position":
+                    return route.params.position
+            }
+        }
+        return ""
+    }
+
+    const [name, setName] = useState(getDeltal("name"));
+    const [position,setposition] = useState(getDeltal("position"));
+    const [phone, setPhone] = useState(getDeltal("phone"));
+    const [email, setemail] = useState(getDeltal("email"));
+    const [salary, setsalary] = useState(getDeltal("salary"));
+    const [picture, setpicture] = useState(getDeltal("picture"));
     const [modal, setmodal] = useState(false);
 
     const _SumitData = () => {
@@ -22,15 +43,41 @@ const CreatEmployee = () => {
               },
             body:JSON.stringify({
                 name:name,
-                email:email,
-                position:position,
                 phone:phone,
+                email:email,
                 salary:salary,
                 picture:picture,
+                position:position,   
             })
-        }).then(res => res.json())
+        }).then(res => {return res.json()})
         .then(data => {
-            console.log(data + "data☺")
+            Alert.alert("thêm thành công"  + " " + data.name)
+            navigation.navigate("ListEmployee");
+        }).catch(err => {
+            console.log("err" + err)
+        })
+    }
+
+    const updateData = () => {
+        fetch('http://192.168.0.111:3000/update-data',{
+            method:'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body:JSON.stringify({
+                id : route.params._id,
+                name:name,
+                phone:phone,
+                email:email,
+                salary:salary,
+                picture:picture,
+                position:position,   
+            })
+        }).then(res => {return res.json()})
+        .then(data => {
+            Alert.alert("cập nhập thành công"  + " " + data.name)
+            props.navigation.navigate("ListEmployee");
         }).catch(err => {
             console.log("err" + err)
         })
@@ -156,9 +203,18 @@ const CreatEmployee = () => {
             <Button  style={styles.button} icon={picture == ""?"upload":"check-bold"} mode="contained" onPress={() => setmodal(true)}>
                 Upload Image
             </Button>
+
+            {
+                route.params?
+                <Button style={styles.button} icon="content-save" mode="contained" onPress={() => updateData()}>
+                UPdate-User
+            </Button>:
             <Button style={styles.button} icon="content-save" mode="contained" onPress={() => _SumitData()}>
                 Save
             </Button>
+            }
+
+            
 
             <Modal
                 animationType="slide"
